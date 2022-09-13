@@ -1,75 +1,57 @@
 <script setup lang="ts">
-import Versions from './components/Versions.vue'
+import * as echarts from 'echarts/core'
+import { GridComponent, GridComponentOption } from 'echarts/components'
+import { BarSeriesOption, BarChart, LineChart, LineSeriesOption } from 'echarts/charts'
+import { UniversalTransition } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
+import { onMounted } from 'vue'
+
+echarts.use([GridComponent, BarChart, LineChart, CanvasRenderer, UniversalTransition])
+
+type EChartsOption = echarts.ComposeOption<GridComponentOption | LineSeriesOption | BarSeriesOption>
+
+onMounted(() => {
+  var chartDom = document.getElementById('main')!
+  var myChart = echarts.init(chartDom)
+  var option: EChartsOption
+
+  option = {
+    xAxis: {
+      type: 'category',
+      data: ['Mach Latte', 'Milk Tea', 'Cheese Cocoa', 'Walnut Brownie']
+    },
+    yAxis: {},
+    series: [
+      {
+        type: 'bar',
+        name: '2015',
+        data: [89.3, 92.1, 94.4, 85.4]
+      },
+      {
+        type: 'line',
+        name: '2016',
+        data: [95.8, 89.4, 91.2, 76.9]
+      },
+      {
+        type: 'line',
+        name: '2017',
+        data: [97.7, 83.1, 92.5, 78.1]
+      }
+    ]
+  }
+  option && myChart.setOption(option)
+})
 </script>
 
 <template>
-  <Versions></Versions>
-  <svg viewBox="0 0 900 300">
-    <use xlink:href="./assets/icons.svg#electron" />
-  </svg>
-  <h2>You've successfully created an Electron project with Vue and TypeScript</h2>
-
-  <p class="desc">Please try pressing <code>F12</code> to open the devTool</p>
-
-  <p class="desc">
-    What features are being added to the project to help you develop, build and pack Electron app
-  </p>
-
-  <div class="features">
-    <ul>
-      <li>
-        <p>
-          ● Use
-          <a target="_blank" href="https://eslint.org/docs/user-guide/getting-started">ESLint</a>
-          and <a target="_blank" href="https://prettier.io">Prettier</a> to better lint and style
-          your code, help you to write high-quality code.
-        </p>
-      </li>
-      <li>
-        <p>
-          ● Use
-          <a target="_blank" href="https://github.com/alex8088/electron-vite">electron-vite</a>
-          , a fast build tooling integrated with
-          <a target="_blank" href="https://vitejs.dev">Vite</a>, and you don't need to worry
-          about configuration.
-        </p>
-      </li>
-      <li>
-        <p>
-          ● Use
-          <a target="_blank" href="https://github.com/alex8088/electron-toolkit"
-            >electron-toolkit</a
-          >
-          that make you easy to develop. For example: TSconfigs extends, expose common Electron APIs
-          to renderers in preload scripts and effective utils for the main process.
-        </p>
-      </li>
-      <li>
-        <p>
-          ● Use <a target="_blank" href="https://www.electron.build">electron-builder</a> and preset
-          common configuration, allows you to easily pack Electron app.
-        </p>
-      </li>
-      <li>
-        <p>● More instructions are available in README.md.</p>
-      </li>
-    </ul>
-  </div>
-
-  <p class="footer">
-    See
-    <a
-      target="_blank"
-      href="https://github.com/alex8088/quick-start/blob/master/packages/create-electron"
-      >create-electron</a
-    >
-    for more details on each supported template:
-    <br />
-    <code>vanilla</code>, <code>vanilla-ts</code>, <code>vue</code>, <code>vue-ts</code>,
-    <code>react</code>, <code>react-ts</code>, <code>svelte</code>, <code>svelte-ts</code>
-  </p>
+  <div id="main"></div>
 </template>
 
 <style lang="less">
 @import './assets/css/styles.less';
+#main {
+  width: 800px;
+  height: 500px;
+  background: #fff;
+}
 </style>

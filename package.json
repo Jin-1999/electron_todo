@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.2",
-    "@electron-toolkit/utils": "^1.0.2"
+    "@electron-toolkit/utils": "^1.0.2",
+    "echarts": "^5.3.3"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
